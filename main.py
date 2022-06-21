@@ -1,3 +1,5 @@
+# Adapted from https://stackoverflow.com/a/47877930/extract-images-from-pdf-without-resampling-in-python, kateryna, 2017-12-18
+
 import os
 import fitz  # pip install --upgrade pip; pip install --upgrade pymupdf
 from tqdm import tqdm # pip install tqdm
