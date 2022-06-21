@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><!-- TEMPLATE: Title --> &ndash; Image Spritemap</title>
+  <style>
+    html {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    img {
+      width: 20rem;
+      height: auto;
+    }
+
+    .img-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 20rem;
+      height: 20rem;
+      padding: 1rem;
+      box-sizing: content-box;
+      background-color: rgba(0, 0, 0, 0.05);
+      border-radius: 1rem;
+    }
+
+    .gallery {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+    }
+
+    .thumbnail {
+      margin: 0.5rem 0.5rem 2rem 0.5rem;
+    }
+
+    .thumbnail-caption {
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="gallery">
+    <!-- TEMPLATE: Images -->
+  </div>
+  <script>
+    function populateGallery() {
+      const images = document.querySelectorAll("img");
+      const parent = document.getElementsByClassName("gallery")[0];
+      for (const image of images) {
+        const thumbnail2 = render("figure.thumbnail", [
+          render("div.img-wrapper", [image]),
+          render("figcaption.thumbnail-caption", [], { textContent: image.alt }),
+        ]);
+        parent.appendChild(thumbnail2);
+      }
+    }
+
+    function render(tag, children, properties = {}) {
+      const { tag: tagName, classes: tagClasses } = processTagQuery(tag);
+      const element = document.createElement(tagName);
+      element.classList.add(...tagClasses);
+      for (const child of children)
+        element.appendChild(child);
+      for (const property in properties) {
+        if (property === "classes") {
+          const classes = properties[property];
+          element.classList.add(...classes);
+          continue;
+        }
+        element[property] = properties[property];
+      }
+      return element;
+    }
+
+    function processTagQuery(tagQuery) {
+      const tagElements = tagQuery.split(".");
+      const tag = tagElements.shift();
+      const classes = [...tagElements];
+      return { tag, classes };
+    }
+
+    populateGallery();
+  </script>
+</body>
+
+</html>
